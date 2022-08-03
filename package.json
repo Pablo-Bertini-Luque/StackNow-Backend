@@ -1,0 +1,26 @@
+{
+  "name": "stacknow-backend",
+  "version": "1.0.0",
+  "description": "Backend del proyecto final en Rolling Code School",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AxelAngelucci/StackNow-Backend.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mongodb",
+    "bcrypt",
+    "mongoose"
+  ],
+  "author": "Axel Angelucci & Pablo Bertini",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AxelAngelucci/StackNow-Backend/issues"
+  },
+  "homepage": "https://github.com/AxelAngelucci/StackNow-Backend#readme"
+}
