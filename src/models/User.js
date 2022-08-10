@@ -27,4 +27,10 @@ const User = Schema({
     timestamps: true,
 });
 
+User.methods.toJSON = function () { //No enviar el hash ni version al frontend
+    const userFields = this.toObject();
+    delete userFields.password;
+    delete userFields.__v;
+    return userFields;
+}
 export default model('users', User);
