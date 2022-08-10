@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {getAllUsers, signupUser} from "../controllers/users.controller.js";
+import { verifyIfIsEmail,validPassLength ,validResult } from "../middlewares/users.middlewares.js";
 
 const userRouter = Router();
 
@@ -10,11 +11,11 @@ userRouter
 userRouter
     .route("/signup")
     .get()
-    .post(signupUser)
+    .post([verifyIfIsEmail, validPassLength, validResult], signupUser)
 userRouter
     .route("/login")
     .get()
     .post()
 
 
-export default userRouter; 
+export default userRouter;
