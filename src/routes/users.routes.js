@@ -1,6 +1,6 @@
 import { Router } from "express";
-import {getAllUsers, signupUser} from "../controllers/users.controller.js";
-import { verifyIfIsEmail,validPassLength ,validResult } from "../middlewares/users.middlewares.js";
+import {getAllUsers, getUserById, login, signupUser} from "../controllers/users.controller.js";
+import { getIdValidations, logInUserValidations, signupUserValidations } from "../middlewares/users.middlewares.js";
 
 const userRouter = Router();
 
@@ -9,13 +9,22 @@ userRouter
     .get(getAllUsers)
     .post()
 userRouter
+    .route("/list/:id")
+    .get(getIdValidations, getUserById);
+userRouter
     .route("/signup")
     .get()
-    .post([verifyIfIsEmail, validPassLength, validResult], signupUser)
+    .post(
+            signupUserValidations, 
+            signupUser
+        );
 userRouter
     .route("/login")
     .get()
-    .post()
+    .post(
+        logInUserValidations,
+        login
+        );
 
 
 export default userRouter;
