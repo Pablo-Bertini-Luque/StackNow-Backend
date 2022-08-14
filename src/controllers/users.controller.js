@@ -76,10 +76,22 @@ const login = async (req, res)=>{
     }
 }
 
+const currentUser = async (req, res) => {
+    if(!req.user) return res.status(200).json({success: false, user: null});
+    return await User.findById(req.user.id).then(
+        user => {
+            res.status(200).json({success: true, data: user});
+        }
+    ).catch(
+        error => {
+            res.status(200).json({success: false, error});
+    });
+}
 
 export {
     getAllUsers,
     getUserById,
     signupUser,
-    login
+    login,
+    currentUser
 }
