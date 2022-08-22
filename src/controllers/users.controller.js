@@ -76,7 +76,7 @@ const login = async (req, res)=>{
     }
 }
 
-const currentUser = async (req, res) => {
+const currentUser = async (req, res) => { //Traer perfil de usuario mediante los datos del JWT
     if(!req.user) return res.status(200).json({success: false, user: null});
     return await User.findById(req.user.id).then(
         user => {
