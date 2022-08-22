@@ -1,30 +1,25 @@
 import { Router } from "express";
-import {getAllUsers, getUserById, login, signupUser} from "../controllers/users.controller.js";
-import { getIdValidations, logInUserValidations, signupUserValidations } from "../middlewares/users.middlewares.js";
+import {currentUser, getAllUsers, getUserById, login, signupUser} from "../controllers/users.controller.js";
+import { getIdValidations, logInUserValidations, signupUserValidations, isAutenticated } from "../middlewares/users.middlewares.js";
 
 const userRouter = Router();
 
 userRouter
     .route("/list")
-    .get(getAllUsers)
-    .post()
+    .get(isAutenticated, getAllUsers)
+    .post(isAutenticated, getAllUsers);
 userRouter
     .route("/list/:id")
     .get(getIdValidations, getUserById);
+
 userRouter
     .route("/signup")
-    .get()
-    .post(
-            signupUserValidations, 
-            signupUser
-        );
+    .post(signupUserValidations, signupUser);
 userRouter
     .route("/login")
-    .get()
-    .post(
-        logInUserValidations,
-        login
-        );
+    .post(logInUserValidations, login);
+userRouter.route('/current').post(isAutenticated, currentUser)
+
 
 
 export default userRouter;
