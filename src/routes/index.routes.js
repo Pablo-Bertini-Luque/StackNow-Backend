@@ -6,8 +6,10 @@ const GLOBAL_BASE_PATH = `/api/v1`;
 const router = Router();
 console.log(GLOBAL_BASE_PATH);
 
-router.get(`${GLOBAL_BASE_PATH}/test`, (_req, res) => {
-  return res.status(200).json({ test: "ox" });
-});
+const pruebaIndex = async (req, res) => {
+  return await res.status(200).json({ test: "OK" });
+};
+
+router.get("/", pruebaIndex);
 
 export default router;
