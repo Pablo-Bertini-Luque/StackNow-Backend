@@ -1,15 +1,22 @@
 import Router from "express";
 import { check } from "express-validator";
+import {
+  crearQuestion,
+  getAllQuestion,
+} from "../controllers/question.controller.js";
+import { isAutenticated } from "../middlewares/users.middlewares.js";
 import validResult from "../middlewares/commons.js";
+import { validNewQuestion } from "../middlewares/question.middlewares.js";
 
 const routerQuestion = Router();
 
-const respuesta = async (req, res) => {
-  await res.json({
-    msg: "Esto es una pregunta",
-  });
-};
+routerQuestion.get("/", getAllQuestion);
 
-routerQuestion.get("/", respuesta);
+routerQuestion.post(
+  "/",
+  [isAutenticated, validNewQuestion],
+  validResult,
+  crearQuestion
+);
 
 export { routerQuestion };
