@@ -1,8 +1,9 @@
 import Question from "../models/question.js";
 
-const crearQuestion = async (req, res) => {
+const NewQuestion = async (req, res) => {
+  const category = req.body.category;
+  const topic = req.body.topic;
   const message = req.body.message;
-  const topic = req.body.topic.toUpperCase();
   const topicDB = await Question.findOne({ topic });
   if (topicDB) {
     return res.status(400).json({
@@ -11,6 +12,7 @@ const crearQuestion = async (req, res) => {
   }
   //Generar la data a guardar
   const data = {
+    category,
     topic,
     message,
     user: req.user._id,
@@ -27,7 +29,7 @@ const crearQuestion = async (req, res) => {
 const getAllQuestion = async (req, res) => {
   //Listar todos las preguntas
   try {
-    const allQuestion = await Question.find(); //Nos retorna todos los usuarios de el documento 'users' en la db
+    const allQuestion = await Question.find(); //Nos retorna todas los preguntas de la db
     return res.status(200).json({
       allQuestion,
     });
@@ -39,4 +41,10 @@ const getAllQuestion = async (req, res) => {
   }
 };
 
-export { crearQuestion, getAllQuestion };
+const deleteQuestion = async (req, res) => {
+  const { id } = req.params;
+  const question = await Question.findByIdAndUpdate(id, { estado: false });
+  res.json(question);
+};
+
+export { NewQuestion, getAllQuestion, deleteQuestion };
