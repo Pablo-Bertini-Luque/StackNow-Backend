@@ -1,8 +1,9 @@
 import Category from "../models/category.js";
 import { check } from "express-validator";
 
-const categoryExists = check("name").custom(async (name) => {
-  const categoryFound = await Category.findOne({ name });
+const categoryExists = check("name").custom(async (req, res) => {
+  const { id } = req.params;
+  const categoryFound = await Category.findOne({ id });
   if (categoryFound) {
     throw new Error("Category already exists");
   }
@@ -10,14 +11,14 @@ const categoryExists = check("name").custom(async (name) => {
 
 const verifyName = check(
   "name",
-  "The name must contain a minimum of 10 characters and a maximum of 100."
-).isLength({ min: 10, max: 100 });
+  "The name must contain a minimum of 3 characters and a maximum of 20."
+).isLength({ min: 3, max: 20 });
 
-const categoryId = async (id) => {
+const categoryId = check("id").custom(async (id) => {
   const existCategory = await Category.findById(id);
   if (!existCategory) {
     throw new Error(`El id ${id} no existe`);
   }
-};
+});
 
 export { categoryExists, verifyName, categoryId };

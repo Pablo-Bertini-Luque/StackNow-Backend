@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
+import Category from "./category.js";
+import User from "./User.js";
 const { Schema, model } = mongoose;
 
 const Question = Schema({
-  category: {
-    type: Schema.Types.ObjectId,
-    ref: "category",
-    required: [true, "The category is required"],
-    unique: [true, "This category already exists"],
-  },
+  // category: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "category",
+  //   required: true,
+  // },
   topic: {
     type: String,
     required: [true, "The topic is required"],
@@ -28,5 +29,10 @@ const Question = Schema({
     require: true,
   },
 });
+
+Question.methods.toJson = function () {
+  const { __v, status, ...question } = this.ObjectId();
+  return question;
+};
 
 export default model("question", Question);

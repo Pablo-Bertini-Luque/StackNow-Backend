@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   deleteCategory,
   getCategories,
-  getCategory,
+  getCategoryId,
   newCategory,
   updateCategory,
 } from "../controllers/category.controller.js";
@@ -19,23 +19,27 @@ const routerCategory = Router();
 
 routerCategory.get("/", getCategories);
 
-routerCategory.get("/", [validId, categoryExists, validResult], getCategory);
+routerCategory.get("/:id", [validId, categoryId, validResult], getCategoryId);
 
 routerCategory.post(
   "/",
-  [isAutenticated, verifyName, validResult],
+  [
+    isAutenticated,
+    verifyName,
+    validResult,
+  ] /* ¿Solo puede hacerlo un admin? A los fines de evitar que se vayan por las ramas las categorias */,
   newCategory
 );
 
 routerCategory.put(
   "/:id",
-  [isAutenticated, verifyName, categoryId, validResult],
+  [isAutenticated, categoryId, verifyName, validResult],
   updateCategory
 );
 
 routerCategory.delete(
   "/:id",
-  [isAutenticated, AdminRole, validId, categoryId, validResult],
+  [isAutenticated, validId, categoryId, validResult], //Ver tema del adminRole
   deleteCategory
 );
 

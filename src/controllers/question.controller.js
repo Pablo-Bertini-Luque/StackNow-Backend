@@ -27,18 +27,20 @@ const NewQuestion = async (req, res) => {
 };
 
 const getAllQuestion = async (req, res) => {
-  //Listar todos las preguntas
-  try {
-    const allQuestion = await Question.find(); //Nos retorna todas los preguntas de la db
-    return res.status(200).json({
-      allQuestion,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      message: "Internal server error",
-      error: error.message,
-    });
-  }
+  const query = { status: true };
+  const [total, questions] = await Promise.all([
+    Question.countDocuments(query),
+    Question.find(query).populate("user", "name"),
+  ]);
+  res.json({ total, questions });
+};
+
+const getQuestionId = async (req, res) => {
+  const { id } = req.params;
+  const question = Question.findById(id)
+    .populate("user", "name")
+    .populate("category", "name");
+  return res.json(question);
 };
 
 const deleteQuestion = async (req, res) => {
@@ -47,4 +49,4 @@ const deleteQuestion = async (req, res) => {
   res.json(question);
 };
 
-export { NewQuestion, getAllQuestion, deleteQuestion };
+export { NewQuestion, getAllQuestion, getQuestionId, deleteQuestion };

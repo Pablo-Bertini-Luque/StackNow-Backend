@@ -5,7 +5,7 @@ const { Schema, model } = mongoose;
 const Category = Schema({
   name: {
     type: String,
-    require: [true, "El nombre es obligatorio"],
+    require: [true, "Name is required"],
   },
   status: {
     type: Boolean,

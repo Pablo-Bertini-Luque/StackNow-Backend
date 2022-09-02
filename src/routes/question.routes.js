@@ -1,20 +1,27 @@
 import Router from "express";
-import { check } from "express-validator";
 import {
   NewQuestion,
+  getQuestionId,
   deleteQuestion,
   getAllQuestion,
 } from "../controllers/question.controller.js";
-import { isAutenticated } from "../middlewares/users.middlewares.js";
+import { isAutenticated, validId } from "../middlewares/users.middlewares.js";
 import validResult from "../middlewares/commons.js";
 import {
   AdminRole,
+  questionExists,
   validNewQuestion,
 } from "../middlewares/question.middlewares.js";
 
 const routerQuestion = Router();
 
 routerQuestion.get("/", getAllQuestion);
+
+routerQuestion.get(
+  "/:id",
+  [validId, questionExists, validResult],
+  getQuestionId
+);
 
 routerQuestion.post(
   "/",
@@ -23,7 +30,7 @@ routerQuestion.post(
 );
 
 routerQuestion.delete(
-  "/",
+  "/:id",
   [isAutenticated, AdminRole, validResult],
   deleteQuestion
 );

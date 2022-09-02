@@ -6,21 +6,21 @@ const getCategories = async (req, res) => {
   const query = { status: true };
   const [total, categories] = await Promise.all([
     Category.countDocuments(query),
-    Category.find(query).populate("users", "name"),
+    Category.find(query).populate("user", "name"),
   ]);
   res.json({ total, categories });
 };
 
-//obtenerCategoria
-const getCategory = async (req, res) => {
+//obtenerCategoria por ID
+const getCategoryId = async (req, res) => {
   const { id } = req.params;
-  const category = await Category.findById(id).populate("users", "name");
+  const category = await Category.findById(id);
   return res.json(category);
 };
 
 const newCategory = async (req, res) => {
   const { name } = req.body;
-  const categoryDB = await Category.findOne(name);
+  const categoryDB = await Category.findOne({ name });
   if (categoryDB) {
     return res.status(400).json({
       msg: `La categoría ${categoryDB.name} ya existe`,
@@ -44,8 +44,7 @@ const newCategory = async (req, res) => {
 const updateCategory = async (req, res) => {
   const { id } = req.params;
   const { status, user, ...data } = req.body;
-  data.user = req.usuario._id;
-  const category = await Category.findByIdAndUpdate(id, data);
+  const category = await Category.findByIdAndUpdate(id, data, { new: true });
 
   res.json(category);
 };
@@ -59,7 +58,7 @@ const deleteCategory = async (req, res) => {
 
 export {
   getCategories,
-  getCategory,
+  getCategoryId,
   newCategory,
   updateCategory,
   deleteCategory,

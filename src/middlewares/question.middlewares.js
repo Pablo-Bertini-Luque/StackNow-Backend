@@ -24,12 +24,15 @@ const validMessageLength = check(
 ).isLength({ min: 30, max: 1000 }); //Verificar longitud del mensaje
 
 const AdminRole = (req, res, next) => {
-  const { rol, nombre } = req.user;
-  if (rol !== "admin") {
+  const role = req.user.role;
+  const name = req.user.name;
+  console.log(role);
+  if (role !== "admin" || role !== "super-admin") {
     return res.status(401).json({
-      msg: `${nombre} no tiene permiso para hacer esto`,
+      msg: `${name} no tiene permiso para hacer esto`,
     });
   }
+  next();
 };
 
 const validNewQuestion = [
@@ -39,4 +42,4 @@ const validNewQuestion = [
   validMessageLength,
 ];
 
-export { validNewQuestion, AdminRole };
+export { validNewQuestion, questionExists, AdminRole };
