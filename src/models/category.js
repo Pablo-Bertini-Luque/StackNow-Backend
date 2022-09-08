@@ -17,6 +17,11 @@ const Category = Schema({
     ref: User,
     require: true,
   },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "users",
+    require: true,
+  },
 });
 
 Category.methods.toJSON = function () {

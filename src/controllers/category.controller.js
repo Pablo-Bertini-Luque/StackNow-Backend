@@ -1,4 +1,4 @@
-import Category from "../models/category.js";
+import Category from "../models/Category.js";
 
 //obtenerCategorias - pagina - total - populate
 
@@ -20,6 +20,7 @@ const getCategoryId = async (req, res) => {
 
 const newCategory = async (req, res) => {
   const { name } = req.body;
+  const user = req.user.id;
   const categoryDB = await Category.findOne({ name });
   if (categoryDB) {
     return res.status(400).json({
@@ -29,7 +30,7 @@ const newCategory = async (req, res) => {
   //Generar la data a guardar
   const data = {
     name,
-    user: req.user._id,
+    user,
   };
 
   const category = new Category(data);

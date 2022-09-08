@@ -39,7 +39,7 @@ routerCategory.put(
 
 routerCategory.delete(
   "/:id",
-  [isAutenticated, validId, categoryId, validResult], //Ver tema del adminRole
+  [isAutenticated, validId, categoryId, AdminRole, validResult], //Ver tema del adminRole
   deleteCategory
 );
 

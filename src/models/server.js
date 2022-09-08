@@ -6,6 +6,7 @@ import router from "../routes/index.routes.js";
 import userRouter from "../routes/users.routes.js";
 import { routerQuestion } from "../routes/question.routes.js";
 import { routerCategory } from "../routes/category.routes.js";
+import { routerAnswer } from "../routes/answer.routes.js";
 
 class Server {
   constructor() {
@@ -33,6 +34,7 @@ class Server {
     this.app.use("/api/v1/users", userRouter);
     this.app.use("/api/v1/question", routerQuestion);
     this.app.use("/api/v1/category", routerCategory);
+    this.app.use("/api/v1/answer", routerAnswer);
   }
 
   listen() {

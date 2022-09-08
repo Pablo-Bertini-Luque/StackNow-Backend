@@ -1,14 +1,12 @@
 import mongoose from "mongoose";
-import Category from "./category.js";
-import User from "./User.js";
 const { Schema, model } = mongoose;
 
 const Question = Schema({
-  // category: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: "category",
-  //   required: true,
-  // },
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: "category",
+    required: true,
+  },
   topic: {
     type: String,
     required: [true, "The topic is required"],

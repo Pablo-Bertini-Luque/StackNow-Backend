@@ -1,15 +1,13 @@
-import Question from "../models/question.js";
+import Question from "../models/Question.js";
 import { check } from "express-validator";
+import User from "../models/User.js";
 
-const verifyCategory = check(
-  "category",
-  "The category must contain a maximum of 20 characters."
-).isLength({ max: 20 });
+const verifyCategory = check("category").isMongoId();
 
 const verifyTopic = check(
   "topic",
-  "The topic must contain a minimum of 10 characters and a maximum of 100."
-).isLength({ min: 10, max: 100 });
+  "The topic must contain a minimum of 5 characters and a maximum of 50."
+).isLength({ min: 5, max: 50 });
 
 const questionExists = check("topic").custom(async (topic) => {
   const questionFound = await Question.findOne({ topic });
@@ -20,16 +18,15 @@ const questionExists = check("topic").custom(async (topic) => {
 
 const validMessageLength = check(
   "message",
-  "The message must contain a minimum of 30 characters and a maximum of 1000."
-).isLength({ min: 30, max: 1000 }); //Verificar longitud del mensaje
+  "The message must contain a maximum of 1000."
+).isLength({ max: 1000 }); //Verificar longitud del mensaje
 
-const AdminRole = (req, res, next) => {
-  const role = req.user.role;
-  const name = req.user.name;
-  console.log(role);
-  if (role !== "admin" || role !== "super-admin") {
+const AdminRole = async (req, res, next) => {
+  const { user } = req;
+  const { role } = await User.findById(user.id);
+  if (role !== "super-admin" && role !== "admin") {
     return res.status(401).json({
-      msg: `${name} no tiene permiso para hacer esto`,
+      msg: `${user.name} no tiene permiso para hacer esto`,
     });
   }
   next();
