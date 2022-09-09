@@ -1,5 +1,9 @@
 import User from "../models/User.js";
 import usersHelpers from "../helpers/users.helpers.js";
+import "dotenv/config";
+import mongoose from "mongoose";
+const host = process.env.HOST;
+const port = process.env.PORT;
 
 const signupUser = async (req, res) => {
   //Registrar usuario
@@ -97,4 +101,28 @@ const currentUser = async (req, res) => {
     });
 };
 
-export { getAllUsers, getUserById, signupUser, login, currentUser };
+const updateUser = async (req, res) => {
+  if (!req.user) return res.status(200).json({ success: false, user: null });
+  const userID = new mongoose.Types.ObjectId(req.user.id);
+  console.log("userID" + userID);
+  try {
+    if (req.file) {
+      const update = await User.findOneAndUpdate(
+        { id: userID },
+        { avatar: `${host}:${port}/public/avatars/${req.file.filename}` },
+        { new: true }
+      );
+      console.log(req.body);
+      return res.status(201).json({ message: "Avatar Updated", update });
+    }
+    const updateData = req.body;
+    const update = await User.findOneAndUpdate({ id: userID }, updateData, {
+      new: true,
+    });
+    return res.status(201).json({ message: "User Updated", update });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getAllUsers, getUserById, signupUser, login, currentUser, updateUser };
