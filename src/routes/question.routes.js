@@ -1,7 +1,6 @@
 import Router from "express";
 import {
   NewQuestion,
-  getQuestionId,
   deleteQuestion,
   getAllQuestion,
 } from "../controllers/question.controller.js";
@@ -16,12 +15,6 @@ import {
 const routerQuestion = Router();
 
 routerQuestion.get("/", getAllQuestion);
-
-routerQuestion.get(
-  "/:id",
-  [validId, questionExists, validResult],
-  getQuestionId
-);
 
 routerQuestion.post(
   "/",

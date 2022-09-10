@@ -38,18 +38,10 @@ const getAllQuestion = async (req, res) => {
   res.json({ total, questions });
 };
 
-const getQuestionId = async (req, res) => {
-  const { id } = req.params;
-  const question = Question.findById(id)
-    .populate("user", "name")
-    .populate("category", "name");
-  return res.json(question);
-};
-
 const deleteQuestion = async (req, res) => {
   const { id } = req.params;
   const question = await Question.findByIdAndUpdate(id, { status: false });
   res.json(question);
 };
 
-export { NewQuestion, getAllQuestion, getQuestionId, deleteQuestion };
+export { NewQuestion, getAllQuestion, deleteQuestion };
