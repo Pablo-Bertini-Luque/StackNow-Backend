@@ -2,20 +2,10 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const Answer = Schema({
-  category: {
-    type: Schema.Types.ObjectId,
-    ref: "category",
-    required: true,
-  },
   question: {
     type: Schema.Types.ObjectId,
     ref: "question",
     required: true,
-  },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "users",
-    require: true,
   },
   message: {
     type: String,
@@ -24,7 +14,11 @@ const Answer = Schema({
   status: {
     type: Boolean,
     default: true,
-    required: true,
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "users",
+    require: true,
   },
 });
 

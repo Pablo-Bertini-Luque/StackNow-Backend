@@ -5,10 +5,7 @@ import {
   NewAnswer,
   updateAnswer,
 } from "../controllers/answer.controller.js";
-import {
-  answerById,
-  verifyMessageAnswer,
-} from "../middlewares/answer.middlewares.js";
+import { verifyMessageAnswer } from "../middlewares/answer.middlewares.js";
 import validResult from "../middlewares/commons.js";
 import { validId } from "../middlewares/users.middlewares.js";
 import { isAutenticated } from "../middlewares/users.middlewares.js";
@@ -22,7 +19,7 @@ routerAnswer.post(
   "/",
   [isAutenticated, verifyMessageAnswer, validResult],
   NewAnswer
-);
+); //Se pasa el id de la pregunta
 
 routerAnswer.put(
   "/:id",
@@ -32,7 +29,7 @@ routerAnswer.put(
 
 routerAnswer.delete(
   "/:id",
-  [isAutenticated, validId, answerById, AdminRole, validResult], //Ver tema del adminRole
+  [isAutenticated, validId, AdminRole, validResult], //Ver tema del adminRole
   deleteAnswer
 );
 

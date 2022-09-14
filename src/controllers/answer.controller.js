@@ -1,5 +1,6 @@
 import Answer from "../models/Answer.js";
 import Category from "../models/Category.js";
+import Question from "../models/Question.js";
 
 const getAnswersByCategory = async (req, res) => {
   const { id } = req.params;
@@ -13,25 +14,32 @@ const getAnswersByCategory = async (req, res) => {
 };
 
 const NewAnswer = async (req, res) => {
-  const category = req.category.id;
-  const question = req.question.id;
+  const { question } = req.body;
   const user = req.user.id;
-  const message = req.body.message;
-  //Generar la data a guardar
+  const { message } = req.body;
   const data = {
-    category,
-    question,
-    user,
-    message,
+    answer: message,
   };
 
-  const answer = new Answer(data);
+  const saveQuestion = await Question.findByIdAndUpdate(question, {
+    data,
+    new: true,
+  }).populate("user", "name");
+  return res.json(saveQuestion);
+};
+
+/*const getQuestionByCategory = async (req, res) => {
+  const { id } = req.params;
+  const questiones = await Question.find(query).populate("category", "name");
+  return res.json(questiones);
+};*/
+
+/*  const answer = new Answer(data);
 
   //Guardar DB
   await answer.save();
 
-  res.status(201).json(answer);
-};
+  res.status(201).json(answer);*/
 
 //actualizar respuesta
 const updateAnswer = async (req, res) => {

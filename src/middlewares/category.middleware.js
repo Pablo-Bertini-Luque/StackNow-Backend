@@ -11,8 +11,8 @@ const categoryExists = check("name").custom(async (req, res) => {
 
 const verifyName = check(
   "name",
-  "The name must contain a maximum of 20 characters."
-).isLength({ max: 20 });
+  "The name must contain a minimum of 3 characters and maximum of 20."
+).isLength({ min: 3, max: 20 });
 
 const categoryId = check("id").custom(async (id) => {
   const existCategory = await Category.findById(id);

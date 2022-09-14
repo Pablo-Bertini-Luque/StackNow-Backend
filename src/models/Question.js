@@ -16,6 +16,10 @@ const Question = Schema({
     type: String,
     required: [true, "This message is required"],
   },
+  answer: {
+    type: String,
+    default: "",
+  },
   status: {
     type: Boolean,
     default: true,
