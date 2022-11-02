@@ -4,7 +4,7 @@ const { Schema, model } = mongoose;
 const Question = Schema({
   category: {
     type: Schema.Types.ObjectId,
-    ref: "category",
+    ref: "categories",
     required: true,
   },
   topic: {
