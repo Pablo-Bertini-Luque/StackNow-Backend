@@ -24,4 +24,4 @@ Category.methods.toJSON = function () {
   return data;
 };
 
-export default model("category", Category);
+export default model("categories", Category);
