@@ -4,7 +4,7 @@ const { Schema, model } = mongoose;
 const Answer = Schema({
   question: {
     type: Schema.Types.ObjectId,
-    ref: "question",
+    ref: "questions",
     required: true,
   },
   message: {
@@ -27,4 +27,4 @@ Answer.methods.toJson = function () {
   return answer;
 };
 
-export default model("answer", Answer);
+export default model("answers", Answer);
