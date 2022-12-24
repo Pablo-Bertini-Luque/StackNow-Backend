@@ -57,16 +57,13 @@ const login = async (req, res) => {
   //if(!req.body.email) return res.status(200).json({success: false, error: 'Not email'});
   //if(!req.body.password) return res.status(200).json({success: false, error: 'Not pass'});
   try {
-    const userExists = await User.findOne({ email: req.body.email });
-    if (!userExists) {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
       return res.status(401).json({
         message: "Incorrect credentials",
       });
     } //Verificamos que el usuario exista en la db, buscándolo mediante su email
-    const match = usersHelpers.matchPass(
-      userExists.password,
-      req.body.password
-    ); //Nos traemos el helper para comparar la password con el hash de la db
+    const match = usersHelpers.matchPass(user.password, req.body.password); //Nos traemos el helper para comparar la password con el hash de la db
     if (!match) {
       return res.status(401).json({
         message: "Incorrect credentials",
@@ -74,12 +71,12 @@ const login = async (req, res) => {
       }); //Si bcrypt detecta que el la contraseña no coincide con el hash retornamos error 401
     } else {
       const accessToken = usersHelpers.generateJwt(
-        userExists._id,
-        userExists.email,
-        userExists.name
+        user._id,
+        user.email,
+        user.name
       ); //Helper que genera y retorna el JWT
       const { token } = accessToken;
-      return res.status(200).json({ match, token });
+      return res.status(200).json({ user, token });
     } //devolvemos un json con match en true y el token
   } catch (error) {
     return res.status(500).json({

@@ -38,10 +38,20 @@ const getAllQuestion = async (req, res) => {
   res.json({ total, questions });
 };
 
+const getQuestionId = async (req, res) => {
+  const { id } = req.params;
+  const question = await Question.findById(id)
+    .populate("user", "name")
+    .populate("category", "name");
+  return res.json(question);
+};
+
 const getQuestionByCategory = async (req, res) => {
   const { id } = req.params;
   const query = { category: id };
-  const questiones = await Question.find(query).populate("category", "name");
+  const questiones = await Question.find(query)
+    .populate("user", "name")
+    .populate("category", "name");
   return res.json(questiones);
 };
 
@@ -51,4 +61,10 @@ const deleteQuestion = async (req, res) => {
   res.json(question);
 };
 
-export { NewQuestion, getAllQuestion, getQuestionByCategory, deleteQuestion };
+export {
+  NewQuestion,
+  getAllQuestion,
+  getQuestionId,
+  getQuestionByCategory,
+  deleteQuestion,
+};

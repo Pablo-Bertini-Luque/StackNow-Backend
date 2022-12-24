@@ -1,6 +1,7 @@
 import express from "express";
 import db from "../db/config.js";
 import morgan from "morgan";
+import cors from "cors";
 import bodyParser from "body-parser";
 import router from "../routes/index.routes.js";
 import userRouter from "../routes/users.routes.js";
@@ -28,6 +29,7 @@ class Server {
   }
 
   middlewares() {
+    this.app.use(cors("*"));
     this.app.use(morgan("dev"));
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));

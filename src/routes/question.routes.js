@@ -3,6 +3,7 @@ import {
   NewQuestion,
   deleteQuestion,
   getAllQuestion,
+  getQuestionId,
   getQuestionByCategory,
 } from "../controllers/question.controller.js";
 import { isAutenticated, validId } from "../middlewares/users.middlewares.js";
@@ -17,7 +18,9 @@ const routerQuestion = Router();
 
 routerQuestion.get("/", getAllQuestion);
 
-routerQuestion.get("/:id", getQuestionByCategory); //Se pasa el id de la categoría
+routerQuestion.get("/:id", getQuestionId);
+
+routerQuestion.get("/category/:id", getQuestionByCategory); //Se pasa el id de la categoría
 
 routerQuestion.post(
   "/",

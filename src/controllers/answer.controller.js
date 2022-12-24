@@ -34,13 +34,6 @@ const NewAnswer = async (req, res) => {
   return res.json(questiones);
 };*/
 
-/*  const answer = new Answer(data);
-
-  //Guardar DB
-  await answer.save();
-
-  res.status(201).json(answer);*/
-
 //actualizar respuesta
 const updateAnswer = async (req, res) => {
   const { id } = req.params;
