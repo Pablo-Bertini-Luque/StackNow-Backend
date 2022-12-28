@@ -122,4 +122,31 @@ const updateUser = async (req, res) => {
   }
 };
 
-export { getAllUsers, getUserById, signupUser, login, currentUser, updateUser };
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findByIdAndUpdate(id, {
+    active: false,
+    deleted: true,
+  });
+  res.json(user);
+};
+
+const reactiveUser = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findByIdAndUpdate(id, {
+    active: true,
+    deleted: false,
+  });
+  res.json(user);
+};
+
+export {
+  getAllUsers,
+  getUserById,
+  signupUser,
+  login,
+  currentUser,
+  updateUser,
+  deleteUser,
+  reactiveUser,
+};

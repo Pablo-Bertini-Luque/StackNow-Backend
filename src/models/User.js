@@ -30,13 +30,13 @@ const User = Schema(
     },
     active: {
       type: Boolean,
-      enum: [true, false],
+      // enum: [true, false],
       default: true,
       required: [true, "The active field is required"],
     },
     deleted: {
       type: Boolean,
-      enum: [true, false],
+      // enum: [true, false],
       default: false,
       required: [true, "The deleted field is required"],
     },

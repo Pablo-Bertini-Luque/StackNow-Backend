@@ -14,25 +14,17 @@ const getAnswersByCategory = async (req, res) => {
 };
 
 const NewAnswer = async (req, res) => {
-  const { question } = req.body;
-  const user = req.user.id;
+  const { idQuestion } = req.body;
   const { message } = req.body;
   const data = {
     answer: message,
   };
 
-  const saveQuestion = await Question.findByIdAndUpdate(question, {
-    data,
+  const saveQuestion = await Question.findByIdAndUpdate(idQuestion, data, {
     new: true,
   }).populate("user", "name");
   return res.json(saveQuestion);
 };
-
-/*const getQuestionByCategory = async (req, res) => {
-  const { id } = req.params;
-  const questiones = await Question.find(query).populate("category", "name");
-  return res.json(questiones);
-};*/
 
 //actualizar respuesta
 const updateAnswer = async (req, res) => {
@@ -43,7 +35,7 @@ const updateAnswer = async (req, res) => {
   res.json(answer);
 };
 
-//borrar categoria -
+// borrar categoria -
 const deleteAnswer = async (req, res) => {
   const { id } = req.params;
   const answer = await Category.findByIdAndUpdate(id, { status: false });
