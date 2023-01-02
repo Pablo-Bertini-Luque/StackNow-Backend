@@ -61,10 +61,17 @@ const deleteQuestion = async (req, res) => {
   res.json(question);
 };
 
+const questionByUser = async (req, res) => {
+  const { id } = req.params;
+  const question = await Question.find({ user: { _id: id } });
+  return res.json(question);
+};
+
 export {
   NewQuestion,
   getAllQuestion,
   getQuestionId,
   getQuestionByCategory,
   deleteQuestion,
+  questionByUser,
 };

@@ -5,6 +5,7 @@ import {
   getAllQuestion,
   getQuestionId,
   getQuestionByCategory,
+  questionByUser,
 } from "../controllers/question.controller.js";
 import { isAutenticated, validId } from "../middlewares/users.middlewares.js";
 import validResult from "../middlewares/commons.js";
@@ -33,5 +34,7 @@ routerQuestion.delete(
   [isAutenticated, AdminRole, validResult],
   deleteQuestion
 );
+
+routerQuestion.get("/myquestions/:id", questionByUser);
 
 export { routerQuestion };
